@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101820">
+  <title>CodeGuard AI — Pull Request Review</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="CodeGuard AI home">
+        <span class="brand-mark" aria-hidden="true">C</span>
+        <span>CodeGuard <span class="brand-accent">AI</span></span>
+      </a>
+      <span class="day-badge"><span class="status-dot"></span> Day 1 · API connection</span>
+    </header>
+
+    <section class="hero" aria-labelledby="page-title">
+      <p class="eyebrow">A clearer first look at every change</p>
+      <h1 id="page-title">Ship with <span>confidence.</span></h1>
+      <p class="subtitle">AI-Powered GitHub Pull Request Code Review</p>
+      <p class="intro">Connect a pull request to get started. Today, we’re checking the connection and confirming your request.</p>
+    </section>
+
+    <section class="review-card" aria-labelledby="form-title">
+      <div class="card-heading">
+        <div class="heading-icon" aria-hidden="true">⌘</div>
+        <div>
+          <h2 id="form-title">Start a review</h2>
+          <p>Enter the repository and pull request you want to review.</p>
+        </div>
+      </div>
+
+      <form id="analysis-form" novalidate>
+        <label for="repository">GitHub repository</label>
+        <div class="input-wrap">
+          <span class="input-prefix" aria-hidden="true">↗</span>
+          <input id="repository" name="repository" type="text" placeholder="owner/repository" autocomplete="off" maxlength="200" required>
+        </div>
+
+        <label for="pull-request">Pull request number</label>
+        <div class="input-wrap">
+          <span class="input-prefix hash" aria-hidden="true">#</span>
+          <input id="pull-request" name="pull_request" type="number" placeholder="e.g. 12" min="1" step="1" required>
+        </div>
+
+        <button id="analyze-button" type="submit">
+          <span>Analyze PR</span><span class="button-arrow" aria-hidden="true">→</span>
+        </button>
+      </form>
+
+      <section id="result" class="result" aria-live="polite" aria-atomic="true">
+        <span class="result-mark" aria-hidden="true">i</span>
+        <p>Enter a repository and Pull Request number, then click Analyze PR.</p>
+    </section>
+        <section class="history-card" aria-labelledby="history-title">
+      <div class="card-heading">
+        <div class="heading-icon" aria-hidden="true">↺</div>
+        <div>
+          <h2 id="history-title">Review History</h2>
+          <p>Previously analyzed pull requests.</p>
+        </div>
+      </div>
+
+      <div id="review-history">
+        <p>Loading review history...</p>
+      </div>
+    </section>
+    <section id="review-details" class="review-details" hidden>
+  <div class="card-heading">
+    <div class="heading-icon" aria-hidden="true">✓</div>
+    <div>
+      <h2>Review Details</h2>
+      <p>Complete analysis of the selected pull request.</p>
+    </div>
+  </div>
+
+  <div id="review-details-content"></div>
+</section>
+    <footer><span class="footer-line"></span><span>Built for thoughtful code reviews</span><span class="footer-line"></span></footer>
+  </main>
+</body>
+</html>

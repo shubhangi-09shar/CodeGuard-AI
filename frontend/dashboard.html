@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CodeGuard — Dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --cream: #eee5da;
+      --sand: #dcc7ae;
+      --dusty-pink: #c9aaa5;
+      --burgundy: #5a1118;
+      --burgundy-light: #731c25;
+      --charcoal: #302624;
+      --muted: #756762;
+      --white: #fffaf5;
+      --border: #d8c7b9;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: "DM Sans", sans-serif;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 80px));
+      margin: auto;
+    }
+
+    .topbar {
+      height: 88px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      color: var(--burgundy);
+      text-decoration: none;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: var(--burgundy);
+    }
+
+    .content {
+      padding: 65px 0;
+    }
+
+    .eyebrow {
+      color: var(--burgundy);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin-top: 12px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 48px;
+      letter-spacing: -2px;
+    }
+
+    .intro {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 45px;
+    }
+
+    .stat-card {
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(255, 250, 245, 0.55);
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .stat-value {
+      margin-top: 10px;
+      color: var(--burgundy);
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 32px;
+      font-weight: 600;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 35px;
+    }
+
+    .action-card {
+      padding: 30px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--white);
+    }
+
+    .action-card h2 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 21px;
+    }
+
+    .action-card p {
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 22px;
+      padding: 13px 21px;
+      border-radius: 8px;
+      background: var(--burgundy);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .button:hover {
+      background: var(--burgundy-light);
+    }
+
+    .recent {
+      margin-top: 35px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(255, 250, 245, 0.55);
+    }
+
+    .recent h2 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 20px;
+    }
+
+    .recent p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .recent-intro {
+  margin-bottom: 18px;
+}
+
+.recent-item {
+  padding: 16px;
+  margin-top: 10px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--white);
+}
+
+.recent-item strong {
+  color: var(--burgundy);
+  font-size: 11px;
+}
+
+.recent-item h3 {
+  margin-top: 6px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 15px;
+}
+
+.recent-item p {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.recent-button {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 13px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--burgundy);
+  color: var(--white);
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+    @media (max-width: 800px) {
+      .page {
+        width: min(100% - 32px, 650px);
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <header class="topbar">
+
+      <a href="welcome.html" class="brand">
+        CodeGuard
+      </a>
+
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="analyze.html">Analyze PR</a>
+        <a href="history.html">History</a>
+        <a href="#" id="logout-button">Logout</a>
+    </nav>
+
+    </header>
+
+    <main class="content">
+
+      <p class="eyebrow">Dashboard</p>
+
+        <h1 id="welcome-message">Welcome to CodeGuard.</h1>
+
+    <p class="intro" id="welcome-subtitle">
+         Review your pull requests for quality, security and performance.
+    </p>
+
+      <section class="stats">
+
+        <div class="stat-card">
+          <div class="stat-label">PRs Reviewed</div>
+          <div class="stat-value">—</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Issues Found</div>
+          <div class="stat-value">—</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Critical Issues</div>
+          <div class="stat-value">—</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Reviews Today</div>
+          <div class="stat-value">—</div>
+        </div>
+
+      </section>
+
+      <section class="actions">
+
+        <div class="action-card">
+          <h2>Analyze a Pull Request</h2>
+
+          <p>
+            Connect a GitHub pull request and get an AI-powered
+            code review.
+          </p>
+
+          <a href="analyze.html" class="button">
+            Analyze PR →
+            </a>
+        </div>
+
+        <div class="action-card">
+          <h2>Review History</h2>
+
+          <p>
+            View previously analyzed pull requests and their
+            complete review results.
+          </p>
+
+          <a href="history.html" class="button">
+            View History →
+            </a>
+        </div>
+
+      </section>
+
+      <section class="recent">
+
+  <h2>Recent Reviews</h2>
+
+  <p class="recent-intro">
+    Your latest pull request reviews.
+  </p>
+
+  <div id="recent-reviews">
+    <p>Loading recent reviews...</p>
+  </div>
+
+</section>
+
+    </main>
+
+  </div>
+  <script>
+  async function loadDashboardStats() {
+    try {
+      const user = JSON.parse(
+  sessionStorage.getItem("codeguardUser")
+);
+
+if (!user) {
+  window.location.href = "login.html";
+  return;
+}
+
+const response = await fetch(
+  `http://127.0.0.1:8000/api/dashboard-stats?user_id=${user.user_id}`
+);
+
+      if (!response.ok) {
+        throw new Error("Failed to load dashboard statistics.");
+      }
+
+      const data = await response.json();
+
+      const statValues = document.querySelectorAll(".stat-value");
+
+      statValues[0].textContent = data.total_reviews;
+      statValues[1].textContent = data.total_issues;
+      statValues[2].textContent = data.critical_issues;
+      statValues[3].textContent = data.reviews_today;
+
+    } catch (error) {
+      console.error("Dashboard stats error:", error);
+    }
+  }
+
+  loadDashboardStats();
+</script>
+<script>
+  async function loadRecentReviews() {
+    const container = document.querySelector("#recent-reviews");
+
+    try {
+      const user = JSON.parse(
+  sessionStorage.getItem("codeguardUser")
+);
+
+if (!user) {
+  window.location.href = "login.html";
+  return;
+}
+
+const response = await fetch(
+  `http://127.0.0.1:8000/api/reviews?user_id=${user.user_id}`
+);
+
+      if (!response.ok) {
+        throw new Error("Failed to load recent reviews.");
+      }
+
+      const data = await response.json();
+
+      const reviews = (data.reviews || []).slice(0, 3);
+
+      if (!reviews.length) {
+        container.innerHTML = `
+          <p>No reviews found.</p>
+        `;
+        return;
+      }
+
+      container.innerHTML = reviews.map(review => `
+        <div class="recent-item">
+
+          <strong>
+            PR #${review.pull_request}
+          </strong>
+
+          <h3>
+            ${review.title}
+          </h3>
+
+          <p>
+            ${review.repository}
+          </p>
+
+          <p>
+            +${review.additions}
+            additions ·
+            -${review.deletions}
+            deletions
+          </p>
+
+          <a
+            class="recent-button"
+            href="history.html"
+          >
+            View Review →
+          </a>
+
+        </div>
+      `).join("");
+
+    } catch (error) {
+
+      console.error("Recent reviews error:", error);
+
+      container.innerHTML = `
+        <p>Could not load recent reviews.</p>
+      `;
+    }
+  }
+
+  loadRecentReviews();
+</script>
+<script>
+  async function loadWelcomeMessage() {
+    const user = JSON.parse(
+      sessionStorage.getItem("codeguardUser")
+    );
+
+    if (!user) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/reviews?user_id=${user.user_id}`
+      );
+
+      const data = await response.json();
+      const reviews = data.reviews || [];
+
+      if (reviews.length > 0) {
+        document.querySelector("#welcome-message").textContent =
+          `Welcome back, ${user.name} 👋`;
+
+        document.querySelector("#welcome-subtitle").textContent =
+          "Here's an overview of your CodeGuard activity.";
+      } else {
+        document.querySelector("#welcome-message").textContent =
+          `Welcome, ${user.name} 👋`;
+
+        document.querySelector("#welcome-subtitle").textContent =
+          "Let's get your first CodeGuard review started.";
+      }
+
+    } catch (error) {
+      console.error("Welcome message error:", error);
+    }
+  }
+
+  loadWelcomeMessage();
+</script>
+<script>
+  document.querySelector("#logout-button").addEventListener("click", (event) => {
+    event.preventDefault();
+
+    sessionStorage.removeItem("codeguardUser");
+
+    window.location.href = "login.html";
+  });
+</script>
+</body>
+</html>

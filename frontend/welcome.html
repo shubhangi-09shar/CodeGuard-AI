@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CodeGuard — AI Code Review</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --cream: #eee5da;
+      --sand: #dcc7ae;
+      --dusty-pink: #c9aaa5;
+      --burgundy: #5a1118;
+      --burgundy-light: #731c25;
+      --charcoal: #302624;
+      --muted: #756762;
+      --white: #fffaf5;
+      --border: #d8c7b9;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: "DM Sans", sans-serif;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 80px));
+      min-height: 100vh;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---------- Navigation ---------- */
+
+    .topbar {
+      height: 92px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      color: var(--burgundy);
+      text-decoration: none;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.7px;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      color: var(--burgundy);
+    }
+
+    /* ---------- Hero ---------- */
+
+    .hero {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  align-items: center;
+  gap: 60px;
+  padding: 55px 0 45px;
+}
+
+    .eyebrow {
+      margin-bottom: 18px;
+      color: var(--burgundy);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 650px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(48px, 6vw, 76px);
+      line-height: 1.03;
+      font-weight: 600;
+      letter-spacing: -3px;
+    }
+
+    h1 span {
+      color: var(--burgundy);
+    }
+
+    .description {
+      max-width: 550px;
+      margin-top: 26px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 38px;
+    }
+
+    .primary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 24px;
+      border-radius: 9px;
+      background: var(--burgundy);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .primary-button:hover {
+      background: var(--burgundy-light);
+      transform: translateY(-2px);
+    }
+
+    .secondary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 23px;
+      border: 1px solid #c5aaa0;
+      border-radius: 9px;
+      color: var(--burgundy);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .secondary-button:hover {
+      background: rgba(255, 250, 245, 0.5);
+    }
+
+    /* ---------- Product Preview ---------- */
+
+    .preview-area {
+      position: relative;
+      min-height: 430px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .preview-backdrop {
+      position: absolute;
+      width: 390px;
+      height: 390px;
+      border-radius: 50%;
+      background: var(--dusty-pink);
+      opacity: 0.55;
+    }
+
+    .preview-card {
+      position: relative;
+      width: min(430px, 100%);
+      padding: 24px;
+      border: 1px solid rgba(90, 17, 24, 0.14);
+      border-radius: 18px;
+      background: rgba(255, 250, 245, 0.88);
+      box-shadow: 0 25px 60px rgba(70, 35, 30, 0.12);
+    }
+
+    .preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .preview-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .preview-status {
+      color: var(--burgundy);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .preview-input {
+      height: 42px;
+      margin-top: 22px;
+      padding: 0 13px;
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      color: #927f78;
+      background: var(--cream);
+      font-size: 11px;
+    }
+
+    .preview-button {
+      height: 42px;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 7px;
+      background: var(--burgundy);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .preview-results {
+      margin-top: 20px;
+      display: grid;
+      gap: 9px;
+    }
+
+    .issue {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 12px;
+      border-radius: 7px;
+      background: #f5ebe1;
+      font-size: 11px;
+    }
+
+    .issue-label {
+      color: var(--charcoal);
+      font-weight: 600;
+    }
+
+    .issue-count {
+      color: var(--burgundy);
+      font-weight: 700;
+    }
+
+    /* ---------- Features ---------- */
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      padding-bottom: 45px;
+    }
+
+    .feature {
+      padding: 22px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(255, 250, 245, 0.42);
+    }
+
+    .feature-number {
+      color: var(--burgundy);
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .feature h3 {
+      margin-top: 13px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .feature p {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    /* ---------- Responsive ---------- */
+
+    @media (max-width: 850px) {
+      .page {
+        width: min(100% - 40px, 650px);
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 45px;
+        padding-top: 55px;
+      }
+
+      .preview-area {
+        min-height: 360px;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .page {
+        width: min(100% - 28px, 520px);
+      }
+
+      .topbar {
+        height: 75px;
+      }
+
+      .nav-link {
+        display: none;
+      }
+
+      h1 {
+        font-size: 48px;
+        letter-spacing: -2px;
+      }
+
+      .description {
+        font-size: 15px;
+      }
+
+      .actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .preview-card {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <header class="topbar">
+      <a href="welcome.html" class="brand">
+        CodeGuard
+      </a>
+
+      <nav class="nav-right">
+        <a href="how-it-works.html" class="nav-link">How it works</a>
+        <a href="about.html" class="nav-link">About</a>
+      </nav>
+    </header>
+
+    <main class="hero">
+
+      <section class="hero-content">
+
+        <p class="eyebrow">
+          AI-powered code review
+        </p>
+
+        <h1>
+          Review your code
+          <span>before it ships.</span>
+        </h1>
+
+        <p class="description">
+          Review GitHub pull requests for code quality,
+          security risks, performance issues and potential bugs —
+          with intelligent suggestions for improvement.
+        </p>
+
+        <div class="actions">
+        <a href="dashboard.html" class="primary-button">
+            Get Started&nbsp; →
+        </a>
+        </div>
+
+      </section>
+
+      <section class="preview-area" aria-label="CodeGuard preview">
+
+        <div class="preview-backdrop"></div>
+
+        <div class="preview-card">
+
+          <div class="preview-header">
+            <div class="preview-title">
+              Pull Request Review
+            </div>
+
+            <div class="preview-status">
+              Ready
+            </div>
+          </div>
+
+          <div class="preview-input">
+            github.com / repository / pull / 42
+          </div>
+
+          <div class="preview-button">
+            Analyze Pull Request
+          </div>
+
+          <div class="preview-results">
+
+            <div class="issue">
+              <span class="issue-label">
+                Critical issues
+              </span>
+
+              <span class="issue-count">
+                1
+              </span>
+            </div>
+
+            <div class="issue">
+              <span class="issue-label">
+                Security findings
+              </span>
+
+              <span class="issue-count">
+                2
+              </span>
+            </div>
+
+            <div class="issue">
+              <span class="issue-label">
+                Performance suggestions
+              </span>
+
+              <span class="issue-count">
+                4
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <section class="features" id="features">
+
+      <div class="feature">
+        <span class="feature-number">01</span>
+
+        <h3>
+          Detect issues early
+        </h3>
+
+        <p>
+          Identify potential bugs, complexity problems
+          and security risks before they reach production.
+        </p>
+      </div>
+
+      <div class="feature">
+        <span class="feature-number">02</span>
+
+        <h3>
+          Understand the problem
+        </h3>
+
+        <p>
+          Get clear explanations of why an issue matters
+          and how it can affect your code.
+        </p>
+      </div>
+
+      <div class="feature">
+        <span class="feature-number">03</span>
+
+        <h3>
+          Get practical fixes
+        </h3>
+
+        <p>
+          Receive actionable suggestions and corrected
+          code when an improvement is possible.
+        </p>
+      </div>
+
+    </section>
+
+  </div>
+
+</body>
+</html>

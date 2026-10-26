@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CodeGuard — About</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --cream: #eee5da;
+      --burgundy: #5a1118;
+      --burgundy-light: #731c25;
+      --charcoal: #302624;
+      --muted: #756762;
+      --white: #fffaf5;
+      --border: #d8c7b9;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: "DM Sans", sans-serif;
+    }
+
+    .page {
+      width: min(1000px, calc(100% - 80px));
+      margin: auto;
+    }
+
+    .topbar {
+      height: 88px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      color: var(--burgundy);
+      text-decoration: none;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    nav a:hover {
+      color: var(--burgundy);
+    }
+
+    .content {
+      padding: 70px 0;
+    }
+
+    .eyebrow {
+      color: var(--burgundy);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 750px;
+      margin-top: 12px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 48px;
+      line-height: 1.1;
+      letter-spacing: -2px;
+    }
+
+    .intro {
+      max-width: 700px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 48px;
+    }
+
+    .card {
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: var(--white);
+    }
+
+    .card h2 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 20px;
+    }
+
+    .card p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .stack {
+      margin-top: 18px;
+      color: var(--burgundy);
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 2;
+    }
+
+    .cta {
+      margin-top: 35px;
+      padding: 30px;
+      border-radius: 13px;
+      background: var(--burgundy);
+      color: var(--white);
+    }
+
+    .cta h2 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 22px;
+    }
+
+    .cta p {
+      margin-top: 8px;
+      color: #eadbd4;
+      font-size: 13px;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 11px 18px;
+      border-radius: 7px;
+      background: var(--white);
+      color: var(--burgundy);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 700px) {
+      .page {
+        width: min(100% - 32px, 600px);
+      }
+
+      nav a {
+        display: none;
+      }
+
+      h1 {
+        font-size: 39px;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <header class="topbar">
+
+      <a href="welcome.html" class="brand">
+        CodeGuard
+      </a>
+
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="analyze.html">Analyze PR</a>
+        <a href="history.html">History</a>
+        <a href="about.html">About</a>
+      </nav>
+
+    </header>
+
+    <main class="content">
+
+      <p class="eyebrow">About CodeGuard</p>
+
+      <h1>
+        A smarter way to review code before it ships.
+      </h1>
+
+      <p class="intro">
+        CodeGuard is an AI-powered GitHub pull request review system
+        designed to help developers identify code quality, security,
+        performance and potential bug-related issues before changes
+        reach production.
+      </p>
+
+      <section class="about-grid">
+
+        <article class="card">
+          <h2>What CodeGuard does</h2>
+
+          <p>
+            CodeGuard connects to a GitHub pull request, retrieves the
+            changed files and analyzes the code using automated checks
+            and AI-assisted review.
+          </p>
+
+          <p>
+            The results explain what went wrong, why it matters and
+            how the developer can improve the code.
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>Built for developers</h2>
+
+          <p>
+            The goal is not just to identify problems, but to make
+            code review easier to understand and act on.
+          </p>
+
+          <p>
+            Reviews include severity levels, explanations, suggestions
+            and corrected code where appropriate.
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>Technology</h2>
+
+          <p>
+            CodeGuard combines a modern backend, asynchronous processing,
+            database persistence and AI-powered analysis.
+          </p>
+
+          <div class="stack">
+            FastAPI · Python · PostgreSQL<br>
+            Redis · Celery · GitHub API<br>
+            Gemini AI · HTML · CSS · JavaScript
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>Designed to scale</h2>
+
+          <p>
+            The architecture separates GitHub integration, analysis,
+            background processing and result storage, making it easier
+            to extend the system with additional languages, checks and
+            review features.
+          </p>
+        </article>
+
+      </section>
+
+      <section class="cta">
+
+        <h2>Ready to review some code?</h2>
+
+        <p>
+          Connect a GitHub pull request and start an analysis.
+        </p>
+
+        <a href="analyze.html" class="button">
+          Analyze a PR →
+        </a>
+
+      </section>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

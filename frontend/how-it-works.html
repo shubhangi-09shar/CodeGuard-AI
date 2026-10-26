@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CodeGuard — How It Works</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --cream: #eee5da;
+      --burgundy: #5a1118;
+      --burgundy-light: #731c25;
+      --charcoal: #302624;
+      --muted: #756762;
+      --white: #fffaf5;
+      --border: #d8c7b9;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: "DM Sans", sans-serif;
+    }
+
+    .page {
+      width: min(1000px, calc(100% - 80px));
+      margin: auto;
+    }
+
+    .topbar {
+      height: 88px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      color: var(--burgundy);
+      text-decoration: none;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    nav a:hover {
+      color: var(--burgundy);
+    }
+
+    .content {
+      padding: 65px 0;
+    }
+
+    .eyebrow {
+      color: var(--burgundy);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 700px;
+      margin-top: 12px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 48px;
+      line-height: 1.1;
+      letter-spacing: -2px;
+    }
+
+    .intro {
+      max-width: 650px;
+      margin-top: 15px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .steps {
+      margin-top: 48px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      gap: 20px;
+      padding: 27px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: var(--white);
+    }
+
+    .number {
+      color: var(--burgundy);
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .step h2 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 20px;
+    }
+
+    .step p {
+      max-width: 650px;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .flow {
+      margin-top: 40px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: #e7d9cc;
+    }
+
+    .flow h2 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 19px;
+    }
+
+    .flow-line {
+      margin-top: 18px;
+      color: var(--burgundy);
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    .cta {
+      margin-top: 40px;
+      padding: 30px;
+      border-radius: 13px;
+      background: var(--burgundy);
+      color: var(--white);
+    }
+
+    .cta h2 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 22px;
+    }
+
+    .cta p {
+      margin-top: 8px;
+      color: #eadbd4;
+      font-size: 13px;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 11px 18px;
+      border-radius: 7px;
+      background: var(--white);
+      color: var(--burgundy);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 700px) {
+      .page {
+        width: min(100% - 32px, 600px);
+      }
+
+      nav a {
+        display: none;
+      }
+
+      h1 {
+        font-size: 39px;
+      }
+
+      .step {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <header class="topbar">
+
+      <a href="welcome.html" class="brand">
+        CodeGuard
+      </a>
+
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="analyze.html">Analyze PR</a>
+        <a href="history.html">History</a>
+        <a href="about.html">About</a>
+      </nav>
+
+    </header>
+
+    <main class="content">
+
+      <p class="eyebrow">How it works</p>
+
+      <h1>
+        From pull request to actionable code review.
+      </h1>
+
+      <p class="intro">
+        CodeGuard combines GitHub integration, automated static analysis
+        and AI-powered review to help developers identify problems
+        before their code reaches production.
+      </p>
+
+      <section class="steps">
+
+        <article class="step">
+          <div class="number">01</div>
+
+          <div>
+            <h2>Connect a pull request</h2>
+
+            <p>
+              Enter a GitHub repository and pull request number.
+              CodeGuard securely retrieves the pull request details
+              and changed files through the GitHub API.
+            </p>
+          </div>
+        </article>
+
+        <article class="step">
+          <div class="number">02</div>
+
+          <div>
+            <h2>Analyze the changes</h2>
+
+            <p>
+              CodeGuard checks the changed code for complexity,
+              security patterns, hardcoded secrets and other
+              potential problems.
+            </p>
+          </div>
+        </article>
+
+        <article class="step">
+          <div class="number">03</div>
+
+          <div>
+            <h2>Run an AI code review</h2>
+
+            <p>
+              The AI reviewer examines the code for bugs,
+              performance concerns and code-quality issues
+              that may require deeper reasoning.
+            </p>
+          </div>
+        </article>
+
+        <article class="step">
+          <div class="number">04</div>
+
+          <div>
+            <h2>Get practical fixes</h2>
+
+            <p>
+              Each detected issue includes an explanation,
+              severity, suggested improvement and corrected
+              code when an appropriate fix can be provided.
+            </p>
+          </div>
+        </article>
+
+      </section>
+
+      <section class="flow">
+
+        <h2>The CodeGuard pipeline</h2>
+
+        <div class="flow-line">
+          GitHub PR
+          →
+          FastAPI
+          →
+          GitHub API
+          →
+          Static Analysis
+          →
+          AI Review
+          →
+          PostgreSQL
+          →
+          Review Dashboard
+        </div>
+
+      </section>
+
+      <section class="cta">
+
+        <h2>Ready to review a pull request?</h2>
+
+        <p>
+          Start an analysis and see what CodeGuard finds.
+        </p>
+
+        <a href="analyze.html" class="button">
+          Analyze a PR →
+        </a>
+
+      </section>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

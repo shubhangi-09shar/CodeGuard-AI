@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CodeGuard — Review History</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --cream: #eee5da;
+      --burgundy: #5a1118;
+      --burgundy-light: #731c25;
+      --charcoal: #302624;
+      --muted: #756762;
+      --white: #fffaf5;
+      --border: #d8c7b9;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: "DM Sans", sans-serif;
+    }
+
+    .page {
+      width: min(1100px, calc(100% - 80px));
+      margin: auto;
+    }
+
+    .topbar {
+      height: 88px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      color: var(--burgundy);
+      text-decoration: none;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    nav a:hover {
+      color: var(--burgundy);
+    }
+
+    .content {
+      padding: 60px 0;
+    }
+
+    .eyebrow {
+      color: var(--burgundy);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin-top: 10px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 46px;
+      letter-spacing: -2px;
+    }
+
+    .intro {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    #review-history {
+      margin-top: 35px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .history-item {
+      padding: 23px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--white);
+    }
+
+    .history-item h2 {
+      margin-top: 7px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 19px;
+    }
+
+    .history-item p {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pr-number {
+      color: var(--burgundy);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .view-button {
+      display: inline-block;
+      margin-top: 17px;
+      padding: 10px 16px;
+      border-radius: 7px;
+      background: var(--burgundy);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .view-button:hover {
+      background: var(--burgundy-light);
+    }
+
+    .empty,
+    .error {
+      padding: 22px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 700px) {
+      .page {
+        width: min(100% - 32px, 600px);
+      }
+
+      nav a {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <header class="topbar">
+
+      <a href="dashboard.html" class="brand">
+        CodeGuard
+      </a>
+
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="analyze.html">Analyze PR</a>
+        <a href="history.html">History</a>
+      </nav>
+
+    </header>
+
+    <main class="content">
+
+      <p class="eyebrow">Past reviews</p>
+
+      <h1>Review History</h1>
+
+      <p class="intro">
+        View previously analyzed pull requests and their results.
+      </p>
+
+      <section id="review-history">
+        <p class="empty">
+          Loading review history...
+        </p>
+      </section>
+
+    </main>
+
+  </div>
+
+  <script>
+    async function loadReviewHistory() {
+      const container = document.querySelector("#review-history");
+
+      try {
+        const user = JSON.parse(
+  sessionStorage.getItem("codeguardUser")
+);
+
+if (!user) {
+  window.location.href = "login.html";
+  return;
+}
+
+const response = await fetch(
+  `http://127.0.0.1:8000/api/reviews?user_id=${user.user_id}`
+);
+
+        if (!response.ok) {
+          throw new Error("Failed to load review history.");
+        }
+
+        const data = await response.json();
+        const reviews = data.reviews || [];
+
+        if (!reviews.length) {
+          container.innerHTML = `
+            <p class="empty">
+              No reviews found.
+            </p>
+          `;
+          return;
+        }
+
+        container.innerHTML = reviews.map(review => `
+          <article class="history-item">
+
+            <div class="pr-number">
+              PR #${review.pull_request}
+            </div>
+
+            <h2>
+              ${review.title}
+            </h2>
+
+            <p>
+              ${review.repository}
+            </p>
+
+            <p>
+              Author: ${review.author}
+            </p>
+
+            <p>
+              +${review.additions} additions
+              ·
+              -${review.deletions} deletions
+            </p>
+
+            <button
+              class="view-button"
+              data-id="${review.id}"
+            >
+              View Review →
+            </button>
+
+          </article>
+        `).join("");
+
+      } catch (error) {
+
+        console.error(error);
+
+        container.innerHTML = `
+          <p class="error">
+            Could not load review history.
+          </p>
+        `;
+      }
+    }
+
+    document.addEventListener("click", async event => {
+
+      if (!event.target.classList.contains("view-button")) {
+        return;
+      }
+
+      const reviewId = event.target.dataset.id;
+
+      try {
+
+        const user = JSON.parse(
+  sessionStorage.getItem("codeguardUser")
+);
+
+if (!user) {
+  window.location.href = "login.html";
+  return;
+}
+
+const response = await fetch(
+  `http://127.0.0.1:8000/api/reviews/${reviewId}?user_id=${user.user_id}`
+);
+
+        if (!response.ok) {
+          throw new Error("Could not load review.");
+        }
+
+        const review = await response.json();
+
+        sessionStorage.setItem(
+          "codeguardReview",
+          JSON.stringify(review)
+        );
+
+        window.location.href = "review.html";
+
+      } catch (error) {
+        console.error(error);
+        alert("Could not load this review.");
+      }
+    });
+
+    loadReviewHistory();
+  </script>
+
+</body>
+</html>
